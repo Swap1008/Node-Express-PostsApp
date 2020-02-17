@@ -6,9 +6,11 @@ const bodyParser=require('body-parser');
 const indexRoute=require('./routes/index');
 const postRoute=require('./routes/PostsRouter');
 const userRoute=require('./routes/UserRoute');
+const postApiRoute=require('./routes/PostsAPIRoutes');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
+const cors=require('cors');
 
 // Passport Config
 require('./config/passport')(passport);
@@ -20,7 +22,7 @@ app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
-
+app.use(cors());
 // 
 // Express session
 app.use(
@@ -42,6 +44,7 @@ app.use(flash());
 app.use(indexRoute);
 app.use(postRoute);
 app.use(userRoute);
+app.use(postApiRoute);
 
 
 
