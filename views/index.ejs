@@ -3,12 +3,34 @@
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
-                <h1><%= title %></h1>
-                <p>Page</p>
+              
+                
             </div>
             <div class="col-2"></div>
         </div>
-    
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                
+                        <% for(let i=0;i< posts.length;i++ ){ %>
+                            <div class="card border-dark mb-3" style="max-width: 50rem;">
+                                <div class="card-header"><a href="/api/readPost/<%= posts[i].id %>""><h2><%= posts[i].title %></h2></a></div>
+                                <div class="card-body">
+                                  
+                                  <p class="card-text"><%= posts[i].body %></p>
+                                </div>
+                                <div class="card-header">
+                                    Author : - &nbsp;&nbsp;  <i class="fa fa-user"></i> <%= posts[i].author %>
+                                    &nbsp;&nbsp;&nbsp;&nbsp; Posted on: - &nbsp;&nbsp; <i class="fad fa-calendar-edit"></i>  <%= posts[i].posted_on.toDateString() %>
+                                </div>
+                              </div>
+                            
+        
+                        <% } %>
+                    
+            </div>
+            <div class="col-2"></div>
+        </div>
 
 
 <%- include('footer'); -%>    

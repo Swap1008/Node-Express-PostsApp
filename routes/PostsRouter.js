@@ -4,21 +4,27 @@ const connection = require("../config/dbconfig");
 let post = {
   title: "",
   author: "",
-  body: ""
+  body: "",
+  posted_on:"",
+  modified_on:""
 };
 
 let message = "";
 router.get("/api/addPosts", (req, res) => {
   res.render("posts/addPosts.ejs", {
+    title:'Add Post',
     message: message
   });
 });
 
 // Add New Posts
 router.post("/api/addPosts", (req, res) => {
+  let date=new Date();
   post.title = req.body.title;
   post.author = req.body.author;
   post.body = req.body.body;
+  post.posted_on=`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  post.modified_on=`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 
   connection.query("INSERT INTO posts set ?", post, (err, res) => {
     if (err) {
@@ -40,8 +46,9 @@ router.get("/api/viewPosts", (req, res) => {
     } else {
       posts = result;
     }
-
+    
     res.render("posts/viewPosts", {
+      title:'Post',
       posts: posts
     });
   });
@@ -59,6 +66,7 @@ router.get("/api/editPost/(:id)", (req, res) => {
         post = result;
       }
       res.render("posts/editPost", {
+        title:'Edit Post',
         post: post,
         message: ""
       });
@@ -116,6 +124,7 @@ router.get("/api/readPost/:id", (req, res) => {
       }
       // console.log(post);
       res.render("posts/readPost", {
+        title:'Read Post',
         post: post
       });
     }
@@ -153,4 +162,5 @@ router.get("/api/readComments/:id", (req, res) => {
     }
   );
 });
+
 module.exports = router;

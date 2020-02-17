@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-2"></div>
   <div class="col-8">
-    <h3 class="alert alert-info">Read Posts</h3>
+    
   </div>
   <div class="col-2"></div>
 </div>
@@ -19,7 +19,8 @@
         <p class="card-text">
           <%= post[0].body %>
         </p>
-        <a href="#" class="card-link">Like</a>
+        <i class="far fa-thumbs-up"></i> <a href="#" class="card-link">Like</a>
+        &nbsp;&nbsp;&nbsp;<i class="far fa-comments"></i>&nbsp;
         <a
           class="card-link"
           data-toggle="collapse"
@@ -29,7 +30,7 @@
           aria-expanded="false"
           aria-controls="collapseExample"
         >
-          Comment
+       Comment
         </a>
         <span class="badge badge-primary badge-pill">2</span>
       </div>
