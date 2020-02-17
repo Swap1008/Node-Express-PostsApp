@@ -1,0 +1,91 @@
+<%- include('../header'); -%>
+
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-8">
+    <h3 class="alert alert-info">Read Posts</h3>
+  </div>
+  <div class="col-2"></div>
+</div>
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-8">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title text-center"><%= post[0].title %></h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <i class="fas fa-pen-alt"></i> Written By: <%= post[0].author %>
+        </h6>
+        <p class="card-text">
+          <%= post[0].body %>
+        </p>
+        <a href="#" class="card-link">Like</a>
+        <a
+          class="card-link"
+          data-toggle="collapse"
+          href="#collapseExample"
+          onclick="readComments('<%= post[0].id %>')"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >
+          Comment
+        </a>
+        <span class="badge badge-primary badge-pill">2</span>
+      </div>
+    </div>
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+        <form action="/api/post/comment/<%= post[0].id %>" method="post">
+          <div class="form-group">
+            <input type="text" name="comment" id="" class="form-control-sm" />
+            <input type="submit" value="Post" class="btn btn-primary btn-sm" />
+          </div>
+        </form>
+      </div>
+      <div class="card card-body">
+        <ul class="list-group list-group-flush" id="viewComments"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-2"></div>
+</div>
+<%- include('../footer'); -%>
+
+<script>
+  // Ajax call to read comments for specific posts
+  function readComments(postId) {
+    $.ajax({
+      url: `/api/readComments/${postId}`,
+      async: true,
+      success: function(result) {
+        showComments(result);
+      },
+      error: function(xhr, status, error) {
+        console.log(error);
+      }
+    });
+  }
+  // To display the comments below the post
+  function showComments(comments) {
+    let commentArray = [];
+    comments.forEach(element => {
+      if (element.status == 1) {
+        if (!commentArray.includes(element.cid)) {
+          commentArray.push(element);
+        }
+      }
+    });
+    // console.log(commentArray);
+    if ($("#viewComments li").length == 0) {
+      commentArray.forEach(ele => {
+        // $("#viewComments li").remove();
+        $("#viewComments").append(`
+                <li class="list-group-item">${ele.comment}
+                  <span class="badge badge-danger float-right"><a href="/api/deleteComment/${ele.cid}"><i class="fas fa-trash-alt"></i></a></span>  
+                </li>
+              `);
+      });
+    }
+  }
+</script>

@@ -1,0 +1,40 @@
+<%- include('../header'); -%>
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <h3 class="alert">Users</h3>
+    </div>
+    <div class="col-2"></div>
+</div>
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+
+                    <th>Name</th>
+                    <th>Email-id</th>
+                    <th>Status</th>
+                    <th colspan="2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0;i< user.length;i++) { %>
+                <tr>
+                    <td><a href="/api/users/viewProfile/<%= user[i].id %>"><%= user[i].fname %></a></td>
+                    <td><%= user[i].emailid %></td>
+                    <td><%= user[i].status==1 ? "Active" : "In-Active" %></td>
+                    <td><a href="/api/editUser/<%= user[i].id %>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a></td>
+                    <td><a href="/api/deleteUser/<%= user[i].id %>" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a></td>
+                </tr>
+                <% }%>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-2"></div>
+</div>
+
+  
+<%- include('../footer'); -%>    
